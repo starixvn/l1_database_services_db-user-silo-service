@@ -1,0 +1,23 @@
+export type UserSessionsSchema = {
+    ssoToken: string;
+    sessionId: string;
+    username: string;
+    ssoTime: Date;
+    recheckInTime: Date;
+    ip: string;
+    browserUserAgent: string;
+    siteId: string;
+    userId: string;
+    language: string;
+    currencyCode: string;
+    currencyName: string;
+    currencyGroupId: string;
+    isTestCurrency: boolean;
+    multiplier: number;
+    siteName: string;
+    system: number;
+    operatorId: string;
+    playerId: string;
+    playerName: string;
+    disableJackpotGames: boolean;
+};
