@@ -37,5 +37,5 @@ export const database = {
 } as const;
 
 export const eventConfigs = {
-    USER: [30_000, 15_000],
+    USER: [30_000, 10_000],
 } as const satisfies SchedulerConfigs;
