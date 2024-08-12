@@ -1,6 +1,6 @@
-import type { FireListener, Scheduler, SchedulerConfigs as SchedulerConfigsUpstream, SchedulerValue } from "@ldb/scheduler";
-type Satisfies<T extends U, U> = T;
-export type SchedulerKeys = "USER";
-export type SchedulerEvents = Record<SchedulerKeys, FireListener>;
-export type SchedulerConfigs = Satisfies<Record<SchedulerKeys, number | SchedulerValue>, SchedulerConfigsUpstream>;
-export type { Scheduler };
+import type { SchedulerEventDescriptions, TimerConfig, Scheduler as UpstreamScheduler } from "@ldb/scheduler";
+
+export type SchedulerKey = "USER";
+export type SchedulerConfig = Record<SchedulerKey, TimerConfig>;
+export type SchedulerEvents = SchedulerEventDescriptions<SchedulerKey>;
+export type Scheduler = UpstreamScheduler<SchedulerKey>;

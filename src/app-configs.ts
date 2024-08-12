@@ -1,8 +1,9 @@
 import type { SeverityLevel } from "@ldb/base-logger";
+import type { TimerConfig } from "@ldb/scheduler";
 import type { NodeOptions, SentryOptions } from "@ldb/sentry-logger";
 import type { SkynexOptions } from "@ldb/skynex-logger";
 import { name, version } from "./metadata.js";
-import type { SchedulerConfigs } from "./types/scheduler.js";
+import type { SchedulerKey } from "./types/scheduler.js";
 
 export const environment = "DEV" as const;
 export const healthcheckPort = 5000 as const;
@@ -36,6 +37,6 @@ export const database = {
     mongoURI: `mongodb://${mongoCred}@${mongoSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${mongoRepl}`,
 } as const;
 
-export const eventConfigs = {
+export const schedulerConfig = {
     USER: [30_000, 10_000],
-} as const satisfies SchedulerConfigs;
+} as const satisfies Record<SchedulerKey, TimerConfig>;

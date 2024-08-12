@@ -2,13 +2,14 @@ import type { BaseLogger } from "@ldb/base-logger";
 import type { Scheduler } from "@ldb/scheduler";
 import { name, version } from "./metadata.js";
 import type { UserTransformer } from "./transformers/user-transfromer.js";
+import type { SchedulerKey } from "./types/scheduler.js";
 
 let exiting = false;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export class App {
-    constructor(private readonly scheduler: Scheduler, private readonly userTransformer: UserTransformer, private readonly logger: BaseLogger) {
+    constructor(private readonly scheduler: Scheduler<SchedulerKey>, private readonly userTransformer: UserTransformer, private readonly logger: BaseLogger) {
         this.selfBound();
         this.handleExceptions();
     }
@@ -55,5 +56,7 @@ export class App {
         this.userTransformer.subscribe(this.scheduler);
 
         this.logger.logWarning({ title: `${name}@${version}`, message: "App has been started." });
+
+        this.scheduler.emit("USER");
     }
 }
