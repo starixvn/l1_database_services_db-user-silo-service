@@ -20,7 +20,6 @@ import { App } from "./app.js";
 import { HealthcheckServer } from "./healthcheck/server.js";
 import { namespaces } from "./namespaces.js";
 import { UserTransformer } from "./transformers/user-transfromer.js";
-import type { SchedulerKey } from "./types/scheduler.js";
 
 export class Container {
     private readonly container: AwilixContainer;
@@ -68,7 +67,7 @@ export class Container {
 
     private registerScheduler() {
         this.container.register({
-            scheduler: asClass(Scheduler<SchedulerKey>).singleton(),
+            scheduler: asClass(Scheduler).singleton(),
             schedulerConfig: asValue(schedulerConfig),
         });
         return this;
