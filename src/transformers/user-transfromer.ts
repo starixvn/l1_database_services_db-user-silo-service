@@ -20,7 +20,7 @@ export class UserTransformer extends Subscriber<SchedulerKey, SchedulerEventDesc
         private readonly mongo: MongoClient,
         private readonly userSessionsNamespace: ChangeStreamNameSpace,
         private readonly userSilosNamespace: ChangeStreamNameSpace,
-        logger: BaseLogger
+        logger: BaseLogger,
     ) {
         super(logger);
         this.selfBound();
