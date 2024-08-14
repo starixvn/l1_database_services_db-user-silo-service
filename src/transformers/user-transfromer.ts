@@ -1,9 +1,8 @@
 import type { BaseLogger } from "@ldb/base-logger";
 import type { ChangeStreamNameSpace, MongoClient } from "@ldb/mongo";
-import type { Scheduler } from "@ldb/scheduler";
 import { version } from "../metadata.js";
 import { Subscriber } from "../modules/subscriber.js";
-import type { SchedulerEvents } from "../types/scheduler.js";
+import type { Scheduler, SchedulerEvents, SchedulerKey } from "../types/scheduler.js";
 import type { UserSessionsSchema } from "../types/user-sessions.js";
 import type { UserSilosSchema } from "../types/user-silos.js";
 
@@ -13,14 +12,14 @@ const BATCH_LIMIT = 1000 as const;
 const USERS_LOOKUP_FIELD = "__user" as const;
 const USERINFOS_LOOKUP_FIELD = "__userinfo" as const;
 
-export class UserTransformer extends Subscriber<"USER", Pick<SchedulerEvents, "USER">, Scheduler> {
+export class UserTransformer extends Subscriber<SchedulerKey, SchedulerEvents> {
     private startTime: Date | null = null;
 
     constructor(
         private readonly mongo: MongoClient,
         private readonly userSessionsNamespace: ChangeStreamNameSpace,
         private readonly userSilosNamespace: ChangeStreamNameSpace,
-        logger: BaseLogger
+        logger: BaseLogger,
     ) {
         super(logger);
         this.selfBound();
@@ -100,7 +99,6 @@ export class UserTransformer extends Subscriber<"USER", Pick<SchedulerEvents, "U
                         currencyName: 1,
                         currencyGroupId: 1,
                         isTestCurrency: 1,
-                        multiplier: 1, //
                         siteName: 1,
                         system: 1,
                         operatorId: 1,
@@ -182,7 +180,6 @@ export class UserTransformer extends Subscriber<"USER", Pick<SchedulerEvents, "U
                         currencyCode: 1,
                         currencyGroupId: 1,
                         isTestCurrency: 1,
-                        rate: 1, //
 
                         system: 1,
                         disableJackpotGames: 1,

@@ -43,6 +43,6 @@ export const database = {
     mongoURI: `mongodb://${mongoCred}@${mongoSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${mongoRepl}`,
 };
 
-export const eventConfigs = {
+export const schedulerConfig = {
     USER: [30_000, 10_000],
 };
