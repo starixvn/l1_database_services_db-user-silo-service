@@ -1,9 +1,7 @@
-import { Logger } from "@ldb/logger";
+import { HealthcheckServer } from "@ldb/healthcheck";
+import { Logger, SentryLogger, SkynexLogger, TerminalLogger } from "@ldb/logger";
 import type { MongoClient } from "@ldb/mongo";
 import { Scheduler } from "@ldb/scheduler";
-import { SentryLogger } from "@ldb/sentry-logger";
-import { SkynexLogger } from "@ldb/skynex-logger";
-import { TerminalLogger } from "@ldb/terminal-logger";
 import { asClass, asValue, createContainer, InjectionMode, type AwilixContainer, type ResolveOptions } from "awilix";
 import {
     environment,
@@ -17,7 +15,7 @@ import {
     terminalSeverityLevel,
 } from "./app-configs.js";
 import { App } from "./app.js";
-import { HealthcheckServer } from "./healthcheck/server.js";
+import { name, version } from "./metadata.js";
 import { namespaces } from "./namespaces.js";
 import { UserTransformer } from "./transformers/user-transfromer.js";
 
@@ -60,6 +58,7 @@ export class Container {
     private registerHealthcheck() {
         this.container.register({
             healthcheckServer: asClass(HealthcheckServer).singleton(),
+            metadata: asValue({ name, version }),
             healthcheckPort: asValue(healthcheckPort),
         });
         return this;

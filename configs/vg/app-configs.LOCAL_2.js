@@ -1,7 +1,7 @@
-/** @typedef {import("@ldb/base-logger").SeverityLevel} SeverityLevel */
-/** @typedef {import("@ldb/sentry-logger").NodeOptions} NodeOptions */
-/** @typedef {import("@ldb/sentry-logger").SentryOptions} SentryOptions */
-/** @typedef {import("@ldb/skynex-logger").SkynexOptions} SkynexOptions */
+/** @typedef {import("@ldb/logger").SeverityLevel} SeverityLevel */
+/** @typedef {import("@ldb/logger").NodeOptions} NodeOptions */
+/** @typedef {import("@ldb/logger").SentryOptions} SentryOptions */
+/** @typedef {import("@ldb/logger").SkynexOptions} SkynexOptions */
 
 import { name, version } from "./metadata.js";
 

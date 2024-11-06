@@ -1,7 +1,5 @@
-import type { SeverityLevel } from "@ldb/base-logger";
+import type { NodeOptions, SentryOptions, SeverityLevel, SkynexOptions } from "@ldb/logger";
 import type { TimerConfig } from "@ldb/scheduler";
-import type { NodeOptions, SentryOptions } from "@ldb/sentry-logger";
-import type { SkynexOptions } from "@ldb/skynex-logger";
 import { name, version } from "./metadata.js";
 import type { SchedulerKey } from "./types/scheduler.js";
 

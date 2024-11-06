@@ -1,4 +1,4 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, MongoClient } from "@ldb/mongo";
 import { version } from "../metadata.js";
 import { Subscriber } from "../modules/subscriber.js";
@@ -64,13 +64,17 @@ export class UserTransformer extends Subscriber<SchedulerKey, SchedulerEvents> {
 
     private async setDoFlag() {
         await this.userSessionsCollection
-            .aggregate([
-                { $match: { $or: [{ [DONE_FLAG]: false }, { [DONE_FLAG]: null }] } },
-                { $limit: BATCH_LIMIT },
-                { $project: { _id: 1 } },
-                { $set: { [DO_FLAG]: true } },
-                { $merge: { into: this.userSessionsCollection.collectionName } },
-            ])
+            .aggregate(
+                [
+                    { $match: { $or: [{ [DONE_FLAG]: false }, { [DONE_FLAG]: null }] } },
+                    { $limit: BATCH_LIMIT },
+                    { $project: { _id: 1 } },
+                    { $set: { [DO_FLAG]: true } },
+                    { $merge: { into: this.userSessionsCollection.collectionName } },
+                ],
+                {},
+                null,
+            )
             .toArray();
     }
 

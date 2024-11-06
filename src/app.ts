@@ -1,4 +1,4 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import { name, version } from "./metadata.js";
 import type { UserTransformer } from "./transformers/user-transfromer.js";
 import type { Scheduler } from "./types/scheduler.js";
