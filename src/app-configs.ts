@@ -1,7 +1,6 @@
 import type { NodeOptions, SentryOptions, SeverityLevel, SkynexOptions } from "@ldb/logger";
-import type { TimerConfig } from "@ldb/scheduler";
 import { name, version } from "./metadata.js";
-import type { SchedulerKey } from "./types/scheduler.js";
+import type { SchedulerConfigs } from "./types/scheduler.js";
 
 export const environment = "DEV" as const;
 export const healthcheckPort = 5000 as const;
@@ -37,4 +36,4 @@ export const database = {
 
 export const schedulerConfig = {
     USER: [30_000, 10_000],
-} as const satisfies Record<SchedulerKey, TimerConfig>;
+} as const satisfies SchedulerConfigs;

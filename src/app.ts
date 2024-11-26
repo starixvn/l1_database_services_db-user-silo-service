@@ -1,65 +1,28 @@
+import { BaseApp } from "@ldb/base-app";
 import type { BaseLogger } from "@ldb/logger";
-import { name, version } from "./metadata.js";
+import type { Scheduler } from "@ldb/scheduler";
+import type { Metadata } from "@ldb/utils";
 import type { UserTransformer } from "./transformers/user-transfromer.js";
-import type { Scheduler } from "./types/scheduler.js";
+import type { SchedulerKeys } from "./types/scheduler.js";
 
-let exiting = false;
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export class App {
+export class App extends BaseApp {
     constructor(
-        private readonly scheduler: Scheduler,
+        private readonly scheduler: Scheduler<SchedulerKeys>,
         private readonly userTransformer: UserTransformer,
-        private readonly logger: BaseLogger,
+        metadata: Metadata,
+        logger: BaseLogger,
     ) {
-        this.selfBound();
-        this.handleExceptions();
-    }
-
-    get className() {
-        return this.constructor.name;
-    }
-
-    private selfBound() {
-        this.handleUncaughtException = this.handleUncaughtException.bind(this);
-        this.handleUnhandledRejection = this.handleUnhandledRejection.bind(this);
-    }
-
-    private handleExceptions() {
-        process.addListener("uncaughtException", this.handleUncaughtException);
-        process.addListener("unhandledRejection", this.handleUnhandledRejection);
-    }
-
-    private async handleUncaughtException(error: Error, origin: NodeJS.UncaughtExceptionOrigin) {
-        while (exiting) {
-            await wait(1_000);
-        }
-
-        exiting = true;
-        this.logger.logFatal({ title: name, message: error }, { tags: { event: "uncaughtException" }, extra: { error, origin } });
-
-        await wait(5_000);
-        process.exit(10);
-    }
-
-    private async handleUnhandledRejection(reason: unknown, promise: Promise<unknown>) {
-        while (exiting) {
-            await wait(5_000);
-        }
-
-        exiting = true;
-        this.logger.logFatal({ title: name, message: reason }, { tags: { event: "unhandledRejection" }, extra: { reason, promise } });
-
-        await wait(5_000);
-        process.exit(20);
+        super(metadata, logger);
     }
 
     initiate() {
         this.userTransformer.subscribe(this.scheduler);
-
-        this.logger.logWarning({ title: `${name}@${version}`, message: "App has been started." });
-
         this.scheduler.emit("USER");
+        super.initiate();
+    }
+
+    terminate() {
+        this.userTransformer.unsubscribe(this.scheduler);
+        super.terminate();
     }
 }

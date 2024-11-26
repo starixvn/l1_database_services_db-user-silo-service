@@ -1,8 +1,9 @@
 import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, MongoClient } from "@ldb/mongo";
+import type { Scheduler } from "@ldb/scheduler";
+import { Subscriber } from "@ldb/utils";
 import { version } from "../metadata.js";
-import { Subscriber } from "../modules/subscriber.js";
-import type { Scheduler, SchedulerEvents, SchedulerKey } from "../types/scheduler.js";
+import type { SchedulerEvents, SchedulerKeys } from "../types/scheduler.js";
 import type { UserSessionsSchema } from "../types/user-sessions.js";
 
 const DO_FLAG = "__archive.do_summary" as const;
@@ -11,7 +12,7 @@ const BATCH_LIMIT = 1000 as const;
 const USERS_LOOKUP_FIELD = "__user" as const;
 const USERINFOS_LOOKUP_FIELD = "__userinfo" as const;
 
-export class UserTransformer extends Subscriber<SchedulerKey, SchedulerEvents> {
+export class UserTransformer extends Subscriber<SchedulerEvents> {
     private startTime: Date | null = null;
 
     constructor(
@@ -202,11 +203,11 @@ export class UserTransformer extends Subscriber<SchedulerKey, SchedulerEvents> {
         return modifiedCount;
     }
 
-    subscribe(publisher: Scheduler) {
-        return super.subscribe(publisher, this.execute, "USER");
+    subscribe(publisher: Scheduler<SchedulerKeys>) {
+        return super.subscribe(publisher, "USER", this.execute);
     }
 
-    unsubscribe(publisher: Scheduler) {
-        return super.unsubscribe(publisher, this.execute, "USER");
+    unsubscribe(publisher: Scheduler<SchedulerKeys>) {
+        return super.unsubscribe(publisher, "USER", this.execute);
     }
 }

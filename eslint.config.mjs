@@ -1,2 +1,2 @@
-import { workspaceConfig } from "@ldb/eslint-config";
-export default workspaceConfig;
+import { defaultConfig } from "@ldb/eslint-config";
+export default defaultConfig;
