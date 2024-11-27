@@ -1,6 +1,5 @@
-import { BaseContainer } from "@ldb/base-container";
+import { asClass, asValue, BaseContainer } from "@ldb/base-container";
 import type { MongoClient } from "@ldb/mongo";
-import { asClass, asValue } from "awilix";
 import { healthcheckPort, lumiLoggerConfig, schedulerConfig } from "./app-configs.js";
 import { App } from "./app.js";
 import { metadata } from "./metadata.js";
