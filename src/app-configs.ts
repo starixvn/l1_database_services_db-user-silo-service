@@ -1,4 +1,5 @@
 import type { LumiLoggerConfig } from "@ldb/logger";
+import type { ChangeStreamNameSpace } from "@ldb/mongo";
 import { name, version } from "./metadata.js";
 import type { SchedulerConfigs } from "./types/scheduler.js";
 
@@ -7,7 +8,7 @@ export const healthcheckPort = 5000 as const;
 
 export const lumiLoggerConfig = {
     sentryNodeOptions: {
-        dsn: "https://098a0c6ad1d74e8eb39ec7df895e59e0@sentry.lumigame.com/76",
+        dsn: "https://e83926b2bc60caab91f825f6fce3d658@sentry-k8s.lumigame.com/24",
         environment,
         initialScope: {
             tags: { service: name },
@@ -17,7 +18,7 @@ export const lumiLoggerConfig = {
     skynexOptions: {
         conversationIds: {
             telegram: -1001911631568,
-            teams: "19:11eb3bf6c3c240fd993eb8048615835c@thread.tacv2",
+            slack: "B08GPPK88MS:T08ACMHMMFS:C090SSUCJ10",
         },
     },
     environment,
@@ -35,3 +36,8 @@ export const database = {
 export const schedulerConfig = {
     USER: [30_000, 10_000],
 } as const satisfies SchedulerConfigs;
+
+export const namespaces = {
+    userSessionsNamespace: { db: "minigame", coll: "usersessions" },
+    userSilosNamespace: { db: "minigame", coll: "user_silos" },
+} as const satisfies Record<string, ChangeStreamNameSpace>;
