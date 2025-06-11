@@ -3,7 +3,7 @@
 
 import { name, version } from "./metadata.js";
 
-export const environment = "SP-LOCAL-0";
+export const environment = "HD-LOCAL-0";
 export const healthcheckPort = 5000;
 
 /** @type {LumiLoggerConfig} */
