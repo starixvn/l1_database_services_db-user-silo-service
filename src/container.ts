@@ -3,7 +3,7 @@ import type { MongoClient } from "@ldb/mongo";
 import { healthcheckPort, lumiLoggerConfig, namespaces, schedulerConfig } from "./app-configs.js";
 import { App } from "./app.js";
 import { metadata } from "./metadata.js";
-import { UserTransformer } from "./transformers/user-transfromer.js";
+import { UserTransformer } from "./transformers/user-transformer.js";
 
 export class Container extends BaseContainer {
     constructor() {
